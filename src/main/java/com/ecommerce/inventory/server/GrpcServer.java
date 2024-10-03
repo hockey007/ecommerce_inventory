@@ -1,6 +1,7 @@
 package com.ecommerce.inventory.server;
 
 import com.ecommerce.inventory.repository.InventoryRepository;
+import com.ecommerce.inventory.service.GrpcInventoryService;
 import com.ecommerce.inventory.service.InventoryService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -26,7 +27,7 @@ public class GrpcServer {
     @PostConstruct
     public void start() throws IOException {
         server = ServerBuilder.forPort(grpcPort)
-                .addService(new InventoryService(inventoryRepository))
+                .addService(new GrpcInventoryService())
                 .build()
                 .start();
 
