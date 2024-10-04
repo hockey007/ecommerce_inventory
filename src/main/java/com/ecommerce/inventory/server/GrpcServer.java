@@ -1,8 +1,8 @@
 package com.ecommerce.inventory.server;
 
-import com.ecommerce.inventory.repository.InventoryRepository;
 import com.ecommerce.inventory.service.GrpcInventoryService;
 import com.ecommerce.inventory.service.InventoryService;
+import com.ecommerce.inventory.util.InventoryMapper;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import jakarta.annotation.PostConstruct;
@@ -17,17 +17,20 @@ import java.io.IOException;
 public class GrpcServer {
 
      @Value("${server.grpc.port}")
-    private Integer grpcPort = 9090;
+    private Integer grpcPort;
 
     @Autowired
-    private InventoryRepository inventoryRepository;
+    private InventoryMapper inventoryMapper;
+
+    @Autowired
+    private InventoryService inventoryService;
 
     private Server server;
 
     @PostConstruct
     public void start() throws IOException {
         server = ServerBuilder.forPort(grpcPort)
-                .addService(new GrpcInventoryService())
+                .addService(new GrpcInventoryService(inventoryService, inventoryMapper))
                 .build()
                 .start();
 

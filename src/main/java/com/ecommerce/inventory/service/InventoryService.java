@@ -13,11 +13,7 @@ import java.util.UUID;
 public class InventoryService {
 
     @Autowired
-    private final InventoryRepository inventoryRepository;
-
-    public InventoryService(InventoryRepository inventoryRepository) {
-        this.inventoryRepository = inventoryRepository;
-    }
+    private InventoryRepository inventoryRepository;
 
     public InventoryResponse createInventory(Inventory inventory) {
         InventoryResponse.Builder responseBuilder;

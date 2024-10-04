@@ -2,18 +2,21 @@ package com.ecommerce.inventory.service;
 
 import com.ecommerce.common.CreateInventoryRequest;
 import com.ecommerce.common.InventoryResponse;
-import com.ecommerce.common.InventoryServiceGrpc;
+import com.ecommerce.common.InventoryServiceGrpc.InventoryServiceImplBase;
 import com.ecommerce.inventory.util.InventoryMapper;
 import io.grpc.stub.StreamObserver;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class GrpcInventoryService extends InventoryServiceGrpc.InventoryServiceImplBase {
+@Service
+public class GrpcInventoryService extends InventoryServiceImplBase {
 
-    @Autowired
-    private InventoryService inventoryService;
+    private final InventoryService inventoryService;
+    private final InventoryMapper inventoryMapper;
 
-    @Autowired
-    private InventoryMapper inventoryMapper;
+    public GrpcInventoryService(InventoryService inventoryService, InventoryMapper inventoryMapper) {
+        this.inventoryService = inventoryService;
+        this.inventoryMapper = inventoryMapper;
+    }
 
     @Override
     public void createInventory(CreateInventoryRequest request,
