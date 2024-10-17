@@ -22,10 +22,10 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "product_id", nullable = false)
     private UUID productId;
 
-    @Column(nullable = false)
+    @Column(name = "variant_id", nullable = false)
     private UUID variantId;
     private String sku;
     private String location;
